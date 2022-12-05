@@ -93,11 +93,3 @@ for (let item of cart) {
 //   cartItems.removeChild(productItemDom);
 // };
 
-
-const deleteBtn = document.querySelector(
-  `[data-id="${produit._id}"][data-color="${productColor}"] .deleteItem`
-);
-
-deleteBtn.addEventListener("click", () => {
-  deleteItem(produit._id, productColor);
-});
