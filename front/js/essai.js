@@ -59,7 +59,7 @@ const displayProduct = (productId, productColor, productQuantity) => {
 
       console.log(produit.name);
     })
-    .catch((error) => alert("error"));
+    .catch((error) => console.log(error));
 };
 
 // const changeQuantity = (id, color, value) => {
@@ -97,10 +97,13 @@ const deleteItem = (productId, color) => {
   const index = carts.indexOf(product);
   if (index > -1) {
     carts.splice(index, 1);
+    
   }
+
 
   // mise à jour du panier
   localStorage.setItem("cart", JSON.stringify(carts));
+  console.log(product);
 
   // retirer product item du DOM
   cartItems.removeChild(productItemDom);
@@ -114,9 +117,6 @@ const calculateTotal = () => {
   let totalQuantityNumber = 0;
 
   for (let item of updatedCart) {
-    
-
-    
       let price = item.itemPrice * item.itemQuantity;
       total += price;
       totalQuantityNumber += parseInt(item.itemQuantity);
@@ -261,6 +261,9 @@ const ordre = () => {
       console.error("Error:", error);
       
     });
+
+ 
+  
 };
 
 window.addEventListener("load", demarage);

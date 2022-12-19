@@ -19,7 +19,13 @@ const start = () => {
     .then((res) => res.json())
     .then((product) => {
       title.textContent = product.name;
-      image.innerHTML = `<img src="${product.imageUrl}" alt=${product.altTxt}/>`;
+      //  image.innerHTML = `<img src="${product.imageUrl}" alt=${product.altTxt}/>`;
+
+      const img = document.createElement("img");
+      img.setAttribute("src", product.imageUrl);
+      img.setAttribute("alt", product.altTxt);
+      image.appendChild(img);
+
       description.textContent = product.description;
       price.textContent = product.price;
 
@@ -40,7 +46,6 @@ const start = () => {
 const produitAjout = (product) => {
   const productQuantity = parseInt(qty.value);
 
-
   // valider  productQuantity et colorSelect
   if (colorSelect.value == "" || productQuantity < 1 || productQuantity > 100) {
     alert(
@@ -51,12 +56,10 @@ const produitAjout = (product) => {
 
   let currentCart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // trouver  element  dont id est egal à newItem.id 
+  // trouver  element  dont id est egal à newItem.id
   const itemExists = currentCart.find(
     (item) => item.id === product._id && item.itemColor === colorSelect.value
   );
-
-   
 
   const newItemQuantity = itemExists?.itemQuantity || 0;
 
@@ -64,32 +67,31 @@ const produitAjout = (product) => {
     id: product._id,
     itemColor: colorSelect.value,
     itemQuantity: productQuantity + newItemQuantity,
-    itemPrice : product.price
+    itemPrice: product.price,
   };
 
-    console.log(itemExists);
+  console.log(itemExists);
 
   if (itemExists) {
     // si  on trouve element avec le meme id on le remplace par newItem
     const index = currentCart.indexOf(itemExists);
-     console.log(index);
+    console.log(index);
 
     // Affiche le produit qui correspond à l'index (produit qui est dans le panier)
-     console.log(currentCart[index]);
+    console.log(currentCart[index]);
 
     // Ici on atteint la proprité itemQuantity du produit. C'est elle qui faut mettre à jour
-     console.log(currentCart[index].itemQuantity);
+    console.log(currentCart[index].itemQuantity);
 
-    currentCart[index] = newItem; 
+    currentCart[index] = newItem;
   } else {
     currentCart.push(newItem);
   }
-  
 
   localStorage.setItem("cart", JSON.stringify(currentCart));
-  console.log(localStorage.getItem("cart"));
   alert("Votre produit est dans le panier");
-  
+
+  console.log(localStorage.getItem("cart"));
 };
 
 window.addEventListener("load", start);
